@@ -12,27 +12,19 @@ pipeline {
             steps {
                 git url: "${env.GIT_REPO}"
             }
+            
         }
 
         stage('Package Helm Chart') {
             steps {
-                sh 'helm package ${env.CHART_NAME}'
+                script { 'helm package ${env.CHART_NAME}' }
             }
         }
 
         stage('Upgrade Deployment') {
             steps {
-                sh 'helm upgrade --install ${env.CHART_NAME} ./${env.CHART_NAME}-*.tgz --namespace ${env.NAMESPACE}'
+                script { 'helm upgrade --install ${env.CHART_NAME} ./${env.CHART_NAME}-*.tgz --namespace ${env.NAMESPACE}' }
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Deployment successful!'
-        }
-        failure {
-            echo 'Deployment failed!'
         }
     }
 }
