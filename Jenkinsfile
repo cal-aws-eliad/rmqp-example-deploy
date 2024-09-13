@@ -17,13 +17,13 @@ pipeline {
 
         stage('Package Helm Chart') {
             steps {
-                script { 'helm package ${env.CHART_NAME}' }
+                script { bat 'helm package ${env.CHART_NAME}' }
             }
         }
 
         stage('Upgrade Deployment') {
             steps {
-                script { 'helm upgrade --install ${env.CHART_NAME} ./${env.CHART_NAME}-*.tgz --namespace ${env.NAMESPACE}' }
+                script { bat 'helm upgrade --install ${env.CHART_NAME} ./${env.CHART_NAME}-*.tgz --namespace ${env.NAMESPACE}' }
             }
         }
     }
