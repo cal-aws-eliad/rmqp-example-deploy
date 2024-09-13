@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+   agent { label 'helm' }
 
     environment {
         GIT_REPO = 'https://github.com/cal-aws-eliad/rmqp-example-deploy.git'
