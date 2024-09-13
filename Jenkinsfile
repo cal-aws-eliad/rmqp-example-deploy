@@ -10,19 +10,19 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git url: "${GIT_REPO}"
+                git url: "${env.GIT_REPO}"
             }
         }
 
         stage('Package Helm Chart') {
             steps {
-                sh 'helm package ${CHART_NAME}'
+                sh 'helm package ${env.CHART_NAME}'
             }
         }
 
         stage('Upgrade Deployment') {
             steps {
-                sh 'helm upgrade --install ${CHART_NAME} ./${CHART_NAME}-*.tgz --namespace ${NAMESPACE}'
+                sh 'helm upgrade --install ${env.CHART_NAME} ./${env.CHART_NAME}-*.tgz --namespace ${env.NAMESPACE}'
             }
         }
     }
