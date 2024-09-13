@@ -1,0 +1,25 @@
+Congratulations! You have successfully deployed the rmqp-example application.
+
+1. RabbitMQ Management Interface:
+   - URL: http://<your-cluster-ip>:{{- range .Values.rabbitmq.service.ports }}{{- if eq .name "management" }}{{ .port }}{{- end }}{{- end }}
+   - Default Username: guest
+   - Default Password: guest
+
+2. RabbitMQ API:
+   - URL: http://<your-cluster-ip>:{{- range .Values.rabbitmq.service.ports }}{{- if eq .name "api" }}{{ .port }}{{- end }}{{- end }}
+
+3. Consumer Service:
+  
+4. Producer Service:
+  
+To get the cluster IP, you can run:
+  kubectl get svc --namespace {{ .Release.Namespace }} -w rmqp-example
+
+To test the connection, ensure the testConnection.enabled value is set to true and run:
+  helm upgrade --install rmqp-example ./rmqp-example --set testConnection.enabled=true
+
+Check the job status with:
+  kubectl get jobs
+  kubectl logs job/test-connection
+
+Thank you for using rmqp-example!

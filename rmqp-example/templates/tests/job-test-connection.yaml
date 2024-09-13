@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-connection
+spec:
+  template:
+    metadata:
+      name: test-connection
+    spec:
+      containers:
+        - name: test-connection
+          image: busybox
+          command: ['sh', '-c', 'nc -zv rabbitmq 5672 && echo "RabbitMQ connection successful" || echo "RabbitMQ connection failed"']
+      restartPolicy: Never
