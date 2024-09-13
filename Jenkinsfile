@@ -17,7 +17,7 @@ pipeline {
 
         stage('Package Helm Chart') {
             steps {
-                script { bat 'helm package ${env.CHART_NAME}' }
+                script { bat 'helm package ./${env.CHART_NAME}/' }
             }
         }
 
