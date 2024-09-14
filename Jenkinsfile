@@ -1,5 +1,5 @@
 pipeline {
-   agent { label 'helm' }
+    agent { label 'helm' }
 
     environment {
         GIT_REPO = 'https://github.com/cal-aws-eliad/rmqp-example-deploy.git'
@@ -17,13 +17,16 @@ pipeline {
 
         stage('Package Helm Chart') {
             steps {
-                script { bat 'helm package ./${env.CHART_NAME}/' }
+                script { bat "helm package ./${env.CHART_NAME}/" }
             }
         }
 
         stage('Upgrade Deployment') {
             steps {
-                script { bat 'helm upgrade --install ${env.CHART_NAME} ./${env.CHART_NAME}-*.tgz --namespace ${env.NAMESPACE}' }
+                script { 
+                    bat "ren *.tgz chart.tgz"
+                    bat "helm upgrade --install ${env.CHART_NAME} chart.tgz --namespace ${env.NAMESPACE}" 
+                }
             }
         }
     }
